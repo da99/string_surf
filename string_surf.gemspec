@@ -7,9 +7,10 @@ Gem::Specification.new do |spec|
   spec.version       = `cat VERSION`
   spec.authors       = ["da99"]
   spec.email         = ["i-hate-spam-1234567@mailinator.com"]
-  spec.summary       = %q{TODO: Write a short summary. Required.}
+  spec.summary       = %q{Navigate a string: back or forward.}
   spec.description   = %q{
-    TODO: Write a longer description. Optional.
+    An inefficient way to navigate a string by character, word,
+    back/forward, and  search.
   }
   spec.homepage      = "https://github.com/da99/string_surf"
   spec.license       = "MIT"
@@ -24,7 +25,6 @@ Gem::Specification.new do |spec|
   spec.required_ruby_version = '>= 2.2.0'
 
   spec.add_development_dependency "pry"           , "~> 0.9"
-  spec.add_development_dependency "rake"          , "~> 10.3"
   spec.add_development_dependency "bundler"       , "~> 1.5"
   spec.add_development_dependency "bacon"         , "~> 1.0"
   spec.add_development_dependency "Bacon_Colored" , "~> 0.1"
