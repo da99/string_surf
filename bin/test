@@ -4,7 +4,18 @@
 #
 set -u -e -o pipefail
 
-files="$(echo -n specs/*.rb | tr ' ' '\n' | sort)"
+if [[ -f "specs/$@.rb" ]]; then
+  files="specs/$@.rb"
+  shift
+else
+  files="$(echo -n specs/*-$@.rb)"
+  if [[ -f "$files" ]]; then
+    shift
+  else
+    files="$(echo -n specs/*.rb | tr ' ' '\n' | sort)"
+  fi
+fi
+
 if [[ -z "$files" ]]; then
   colorize yellow "No tests found." 1>&2
   exit 0
