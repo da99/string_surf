@@ -5,12 +5,40 @@ class String_Surf
 
   class Pos
 
+    attr_reader :pos
+
     def initialize surf, start = 0, fin = nil
       @start = start
       @pos   = @start
       @surf  = surf
       @fin   = fin || (surf.origin.size - 1)
       @cache = {}
+    end
+
+    def start_at_and_back_find pos, target
+      return nil if pos <= @start || pos > @fin
+
+      start = pos
+      char = nil
+      begin
+        start = start - 1
+        char = @surf.origin[start]
+      end while start >= @start && char != target
+
+      return nil unless char == target
+      start
+    end
+
+    def start_at_and_find pos, target
+      return nil if pos < @start || pos >= @fin
+
+      start = pos
+      while start <= @fin && @surf.origin[start + 1] != target
+        start = start + 1
+      end
+
+      return nil if start > @fin
+      start
     end
 
     def word
