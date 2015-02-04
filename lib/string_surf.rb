@@ -11,8 +11,9 @@ class String_Surf
       @start = start
       @pos   = @start
       @surf  = surf
-      @fin   = fin || (surf.origin.size - 1)
+      @fin   = fin || (@surf.origin.size - 1)
       @cache = {}
+      @scan  = String_Surf.scan @surf.origin.scan
     end
 
     def start_at_and_back_find pos, target
@@ -39,11 +40,32 @@ class String_Surf
     end
 
     def start_at_and_find pos, target
-      return nil if pos < @start || pos >= @fin
+      if target.is_a?(String)
+        return nil if pos < @start || pos >= @fin
 
-      # Add one to position because we do not want to
-      # search the char of the cursor.
-      @surf.origin.index(target, pos + 1)
+        # Add one to position because we do not want to
+        # search the char of the cursor.
+        return @surf.origin.index(target, pos + 1)
+      end
+
+      return nil if pos < @start || pos > @fin
+
+      found = false
+      char = nil
+      begin
+        pos = pos + 1
+        char = @surf.origin[pos]
+        case target
+        when :word_bound
+          if char.strip == EMPTY
+            found = true
+            pos = pos - 1
+          end
+        end
+      end while !found && pos < @fin
+
+      return nil unless found
+      pos
     end
 
     def word
@@ -124,6 +146,11 @@ class String_Surf
   end # === class Pos ===
 
   class << self
+
+    def scan s
+      s.scan(/\S+|\n|[^\n\S]+/)
+    end
+
   end # === class self ===
 
   attr_reader :origin
