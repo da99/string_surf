@@ -68,52 +68,21 @@ class String_Surf
     end
 
     def word
-      start_word = @pos
-      return nil if @surf.origin[start_word].strip == EMPTY
-
-      while start_word > @start && start_word <= @fin && @surf.origin[start_word - 1].strip != EMPTY
-        start_word = start_word - 1
-      end
-
-      end_word = @pos
-      while end_word < @fin && @surf.origin[end_word + 1].strip != EMPTY
-        end_word = end_word + 1
-      end
-
-      length = (end_word - start_word) + 1
-      return nil if length < 1
-      @surf.origin[start_word, length]
+      @scan[@pos][0]
     end
 
     def next_word
-      start_word = @pos
-
-      if !whitespace? # then move cursor to next whitespace
-        while start_word < @fin && @surf.origin[start_word + 1].strip != EMPTY
-          start_word = start_word + 1
+      return nil if @pos >= @fin
+      i = @pos
+      found_word = nil
+      begin
+        i = i + 1
+        found_word = @scan[i].first
+        if !found_word
+          return nil if @scan[i].last
         end
-      end
-
-      # Move cursor to last non-whitespace
-      while start_word < @fin && @surf.origin[start_word + 1].strip == EMPTY
-        start_word = start_word + 1
-      end
-
-      # Move cursor to first non-whitespace
-      start_word = start_word + 1
-
-      # Return nil if cursor is at the end of text.
-      return nil if start_word >= @surf.origin.size
-
-      # Get position of last character in word.
-      end_word = start_word
-      while end_word < @fin && @surf.origin[end_word + 1].strip != EMPTY
-        end_word = end_word + 1
-      end
-
-      length = (end_word - start_word) + 1
-      return nil if length < 1
-      @surf.origin[start_word, length]
+      end while i < @fin && !found_word
+      found_word
     end
 
     def first?
