@@ -25,7 +25,7 @@ class String_Surf
         start = start - 1
         char  = @surf.origin[start]
         case target
-        when :black_start
+        when :word_bound
           if char.strip == EMPTY
             found = true
             start = start + 1
@@ -33,7 +33,7 @@ class String_Surf
         end
       end while !found && start >= @start && char != target
 
-      return 0 if target == :black_start && !found
+      return 0 if target == :word_bound && !found
       return nil if char != target && target.is_a?(String)
       start
     end
