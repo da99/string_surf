@@ -7,13 +7,12 @@ class String_Surf
 
     attr_reader :pos
 
-    def initialize surf, start = 0, fin = nil
-      @start = start
-      @pos   = @start
+    def initialize surf
+      @pos   = 0
       @surf  = surf
-      @fin   = fin || (@surf.origin.size - 1)
       @cache = {}
-      @scan  = String_Surf.scan @surf.origin.scan
+      @scan  = String_Surf.scan @surf.origin
+      @fin   = @scan.size - 1
     end
 
     def start_at_and_back_find pos, target
@@ -148,7 +147,7 @@ class String_Surf
   class << self
 
     def scan s
-      s.scan(/\S+|\n|[^\n\S]+/)
+      s.scan(/(\S+)|([^\n\S]+)|(\n)/)
     end
 
   end # === class self ===
