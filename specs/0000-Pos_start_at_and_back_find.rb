@@ -24,4 +24,15 @@ describe 'Pos#start_at_and_back_find' do
       should == nil
   end # === it returns nil if pos is on pos zero
 
+  it "returns position of :black_start" do
+    9.times { @pos.next! }
+    @pos.start_at_and_back_find(@pos.pos, :black_start).
+      should == 8
+  end # === it returns position of :black_start
+
+  it "returns 0 if position of :black_start not found" do
+    @pos.start_at_and_back_find(@pos.pos, :black_start).
+      should == 0
+  end # === it returns 0 if position of :black_start not found
+
 end # === describe 'Pos#start_at_and_back_find'

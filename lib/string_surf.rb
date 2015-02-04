@@ -16,16 +16,25 @@ class String_Surf
     end
 
     def start_at_and_back_find pos, target
-      return nil if pos <= @start || pos > @fin
+      return nil if target.is_a?(String) && (pos <= @start || pos > @fin)
 
       start = pos
       char = nil
+      found = false
       begin
         start = start - 1
-        char = @surf.origin[start]
-      end while start >= @start && char != target
+        char  = @surf.origin[start]
+        case target
+        when :black_start
+          if char.strip == EMPTY
+            found = true
+            start = start + 1
+          end
+        end
+      end while !found && start >= @start && char != target
 
-      return nil unless char == target
+      return 0 if target == :black_start && !found
+      return nil if char != target && target.is_a?(String)
       start
     end
 
