@@ -32,13 +32,9 @@ class String_Surf
     def start_at_and_find pos, target
       return nil if pos < @start || pos >= @fin
 
-      start = pos
-      while start <= @fin && @surf.origin[start + 1] != target
-        start = start + 1
-      end
-
-      return nil if start > @fin
-      start
+      # Add one to position because we do not want to
+      # search the char of the cursor.
+      @surf.origin.index(target, pos + 1)
     end
 
     def word
