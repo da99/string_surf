@@ -1,3 +1,6 @@
+# NOTE:
+This repo. has been archived. This code was never used
+in any significant way.
 
 # String_Surf
 
